@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ノベルゲームテスト</title>
+
+<link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
+<style type="text/css">
+#canvas{
+	width: 800px;
+	height: 600px;
+	border: 1px solid gray;
+}
+#serif{
+	position: relative;
+	top: 350px;
+	left: 100px;
+	width: 600px;
+	height: 200px;
+	border: 1px solid blue;	
+	background-color: rgba(255, 255, 255, 0.75);
+	padding: 10px;
+	user-select: none;
+	font-family: "Rounded Mplus 1c";
+	font-size: 18pt;
+}
+</style>
+</head>
+<body>
+<div id="canvas">
+	<div id="serif"></div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script>
+var SCENARIO = [
+	  {com:"BG", val:"url(/image/sky001.jpg)"}
+	, {com:"S",  val:"吾輩は猫である"}
+	, {com:"S",  val:"名前はまだない"}
+	, {com:"BG", val:"url(/image/sky002.jpg)"}
+	, {com:"S",  val:"どこで生れたかとんと見当けんとうがつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している"}
+	, {com:"S",  val:"吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪どうあくな種族であったそうだ。この書生というのは時々我々を捕つかまえて煮にて食うという話である。"}
+];
+
+var Novel = {
+	  cursor: 0
+	, max: 0
+	, init: function(){
+		this.max = SCENARIO.length;
+		this.play();
+	}
+	, play: function(){
+		if( this.cursor >= this.max ){
+			return(false);
+		}
+
+		switch(SCENARIO[this.cursor].com){
+			// セリフ再生
+			case "S":
+				$("#serif").html(SCENARIO[this.cursor].val);
+				this.cursor++;
+				break;
+
+			// 背景変更
+			case "BG":
+				$("#canvas").css("background-image", SCENARIO[this.cursor].val);
+				this.cursor++;
+				Novel.play();
+				break;
+			
+			default:
+				break;
+		}
+	}
+};
+
+$(document).ready(function(){
+	Novel.init();
+	
+	$("#serif")
+		.on("click", function(){
+			Novel.play();
+		});
+});
+</script>
+</body>
+</html>
