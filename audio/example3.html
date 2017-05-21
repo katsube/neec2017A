@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>BGMを再生＞イベント処理</title>
+</head>
+<body>
+
+<h1>輪唱</h1>
+
+<form>
+	1 <input type="text" id="bear1time">Sec<br>
+	2 <input type="text" id="bear2time">Sec<br>
+	3 <input type="text" id="bear3time">Sec
+</form>
+
+<audio id="bear1" src="sound/bgm/bearintheforest.mp3" autoplay></audio>
+<audio id="bear2" src="sound/bgm/bearintheforest.mp3"></audio>
+<audio id="bear3" src="sound/bgm/bearintheforest.mp3"></audio>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#bear1")
+		.on("timeupdate", function(){
+			var bear = document.getElementById("bear1");		//jQueryを使う場合は$("#bear1").get(0);
+			var cur  = bear.currentTime;			
+
+			$("#bear1time").val(cur);
+
+			//ToDo
+			// 輪唱を実装しよう			
+		});
+	
+	//ToDo 
+	// Bear2, Bear3の再生時間をテキストボックスに表示しよう
+
+});
+</script>
+</body>
+</html>

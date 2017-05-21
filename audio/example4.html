@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>BGMを再生＞JSのみ＆事前ロード</title>
+</head>
+<body>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var bear = new Audio("sound/bgm/bearintheforest.mp3");
+
+	$(bear).on("canplaythrough", function(){				//jQueryの機能を使用しない場合は、bear.addEventListener("canplaythrough", function(){...});
+		alert("森のくまさんの読み込みが完了しました！");
+		bear.play();
+	});
+
+	//ToDo
+	// 複数の音源をすべて読み込み終わったら、森のくまさんを再生する
+	//  homura.mp3, eikyuu_kikan_ningen.mp3
+});
+</script>
+</body>
+</html>

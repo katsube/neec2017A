@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>WebStorage 1</title>
+</head>
+<body>
+
+<div id="counter"></div>
+
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	//前回の値を取得
+	var count = sessionStorage.getItem("count");
+	if( !count ){
+		count = 1;
+	}
+	
+	//インクリメント
+	sessionStorage.setItem("count", Number(count)+1);	//Numberは型変換を行う関数
+
+	//表示
+	$("#counter").html(count);
+});
+
+
+// ToDo
+//   "sessionStorage"の箇所を、"localStorage"に変更して動作の違いを
+//   確認してみましょう。
+
+// ToDo
+//  次のメソッドをも利用してみましょう。
+//    sessionStorage.length 保存されているレコードの数を取得
+//    sessionStorage.removeItem(key)  特定のレコードを削除
+//    sessionStorage.clear()  すべてのレコードを削除
+
+</script>
+</body>
+</html>

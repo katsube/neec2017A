@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Image Base64 3</title>
+</head>
+<body>
+
+<img id="foo">
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$.ajax({
+		  "url": "image/getneec.php"
+		, "dataType": "text"
+	})
+	.done(function(data){
+		$("#foo").attr("src", 'data:image/png;base64,' + data);
+	});
+
+});
+
+// ToDo
+//    最初に取得した際にlocalStorageへ保存、
+//    2回目以降はlocalStorageからデータを取り出すよう変更してみましょう。
+
+// ToDo
+//    localStorageのキャッシュに有効期限をつけてみましょう。
+//      取得してから1分以内ならlocalStorageのデータを利用。
+//      1分を超えた場合はlocalStorageのデータを削除し、最新のファイルを取得する
+
+// ToDo
+//    音声ファイルにも挑戦してみましょう。
+//    <audio src="data:audio/mp3;base64,SUQzAwCAAAAQAFRQRTEAAAAZAAAAaGl0b3N...(ry" controls></audio>
+</script>
+</body>
+</html>

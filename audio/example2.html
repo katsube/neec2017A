@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>BGMを再生＞JSから操作</title>
+</head>
+<body>
+
+<audio id="bear" src="sound/bgm/bearintheforest.mp3"></audio>
+
+<form>
+	<button id="back">←</button>
+	<button id="play">Play</button>
+	<button id="skip">→</button>
+	<button id="volumeup">↑</button>
+	<button id="volumedown">↓</button>
+	<button id="Mute">Mute</button>
+</form>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#play").on("click", function(){
+		document.getElementById("bear").play();		//jQueryを使う場合は$("#bear").get(0).play();
+		return(false);
+	});
+
+	//ToDo: Playボタンに機能追加
+	// 1. Playボタンをクリックすると、音楽を再生、Pauseボタンに変更
+	// 2. Pauseボタンをクリックすると、音楽を停止、Playボタンに変更
+
+	//ToDo: 他のボタンを作ってみよう
+	// skip (3秒戻る)
+	// back (3秒進む)
+	// volumeup (+0.2)
+	// volumedown (-0.2)
+	// mute (無音) ※muted()メソッドを利用
+});
+</script>
+</body>
+</html>

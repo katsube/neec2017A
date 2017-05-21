@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>BGMを再生＞ロード画面</title>
+
+    <link href="css/style5.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="contents">
+	<h1>再生中</h1>
+</div>
+
+<div id="nowloading">
+	<div id="nowloading-info">
+		<img src="image/loading.gif">
+	</div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var bear = new Audio("sound/bgm/bearintheforest_lazy.php");
+
+	$(bear).on("canplaythrough", function(){				//jQueryの機能を使用しない場合は、bear.addEventListener("canplaythrough", function(){...});
+		alert("森のくまさんの読み込みが完了しました！");
+		$("#contents").show();
+		$("#nowloading").hide();
+		bear.play();
+	});
+	
+	
+	//ToDo
+	// 画面のどこかをクリックしたら、SEを再生してみよう
+	// SEは事前にロードしておかないと再生のタイミングが合いません
+});
+</script>
+</body>
+</html>

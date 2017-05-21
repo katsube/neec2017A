@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>画像の事前ロード</title>
+
+    <link href="css/style5.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="contents">
+	<ul id="gallary">
+	</ul>
+</div>
+
+<div id="nowloading">
+	<div id="nowloading-info">
+		<img src="image/loading.gif">
+	</div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var assets = [
+		  "image/gallary/1.jpg"
+		, "image/gallary/2.jpg"
+		, "image/gallary/3.jpg"
+	];
+
+	var callback = function(img){
+		//裏側で画像一覧作成
+		var result="";
+		for(i=0; i<img.length; i++){
+			result += "<li><img src=\""+ img[i].src +"\"></li>";
+		}
+		$("#gallary").html(result);
+	
+		//ローディング画面を非表示、画像一覧を表示
+		$("#contents").show();
+		$("#nowloading").hide();
+		
+		//あらーと
+		alert("done");
+	};
+
+	//プリロード＆完了後の処理
+	IMGLoader(assets, callback);
+});
+
+
+/**
+ * 画像プリローダ
+ */
+function IMGLoader(list, callback){
+	var img   = [];
+	var count = 0;
+
+	for( i=0; i < list.length; i++){
+ 		img[i] = new Image();
+		img[i].src = list[i];
+ 
+		img[i].onload = function() {
+			count++;
+			if(count === list.length){
+				callback(img);
+			}
+		};
+	}
+}
+</script>
+</body>
+</html>

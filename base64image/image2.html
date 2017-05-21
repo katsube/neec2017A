@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Image Base64 2</title>
+</head>
+<body>
+
+<img id="foo">
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var data = 'data:image/png;base64,'+
+				'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';
+
+	//画像出力
+	$("#foo").attr("src", data);		//attr()はHTMLタグの属性を操作するメソッド
+});
+</script>
+</body>
+</html>
