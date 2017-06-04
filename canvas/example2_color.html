@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Canvas Example 2 Color</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="sample" width="600" height="500"></canvas>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var canvas = $("#sample").get(0);
+	var ctx    = canvas.getContext('2d');
+
+	/*----------------------*/
+	/*       線を描く        */
+	/*----------------------*/
+	ctx.beginPath();
+	ctx.moveTo(20, 20);
+	ctx.lineTo(60, 20);
+	ctx.lineTo(60, 60);
+	ctx.lineTo(20, 60);
+	ctx.closePath();
+	ctx.fillStyle   = '#CCCCCC';			//塗りつぶし：グレー
+	ctx.strokeStyle = "rgb(192, 80, 77)";	//線の色：赤
+	ctx.lineWidth   = 5;					//線の幅
+	ctx.fill();
+	ctx.stroke();
+
+	/*----------------------*/
+	/*       円を描く        */
+	/*----------------------*/
+	ctx.beginPath();
+	ctx.arc(70, 250, 60, 0, Math.PI*2, false);	// arc(x, y, radius, startAngle, endAngle, anticlockwise)
+	//ctx.fillStyle   = 'lightblue';				//塗りつぶし：水色
+	//ctx.strokeStyle = "blue";					//線の色：青
+	//ctx.lineWidth   = 5;						//線の幅
+	ctx.fill();
+	ctx.stroke();	
+});
+</script>
+</body>
+</html>

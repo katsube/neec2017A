@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Canvas Example 5 event</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="sample" width="600" height="500"></canvas>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var canvas = $("#sample").get(0);
+	var ctx    = canvas.getContext('2d');
+
+	$(canvas)
+		.attr("tabindex", 0)				//onkeyup/onkeydownを使用する時に必要
+		.focus()
+		.on("click", function(e){
+			console.log("click", e);
+		})
+		.on("dblclick", function(e){
+			console.log("dblclick", e);
+		})
+		.on("mouseover", function(e){
+			console.log("mouseover", e);
+		})
+		.on("mouseout", function(e){
+			console.log("mouseout", e);
+		})
+		.on("mousedown", function(e){
+			console.log("mousedown", e);
+		})
+		.on("mouseup", function(e){
+			console.log("mouseup", e);
+		})
+		.on("mousemove", function(e){
+			console.log("mousemove", e);
+		})
+		.on("mousewheel", function(e){
+			console.log("mousewheel", e);
+		})
+		.on("keydown", function(e){
+			console.log("keydown", e);
+		})
+		.on("keyup", function(e){
+			console.log("keyup", e);
+		});
+});
+</script>
+</body>
+</html>

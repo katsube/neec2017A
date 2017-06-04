@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>enchantjs 1</title>
+</head>
+<body>
+
+<script src="enchantjs/enchant.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	enchant();							// initialize
+	var game = new Core(600, 500);		// game stage
+	game.preload('image/food.png');		// preload image
+	game.fps = 20;
+
+    game.onload = function(){
+		var scene = new Scene();
+
+		//Sprite準備
+		var tantan = new Sprite(194, 129);
+		tantan.image = game.assets['image/food.png'];
+		scene.addChild(tantan);
+		
+		//フレーム毎の処理をここに記述
+		game.addEventListener('enterframe', function() {
+			tantan.x += 1;
+		});
+
+		//シーンを反映
+        game.pushScene(scene);
+	};
+
+    game.start(); // start your game!
+});
+</script>
+</body>
+</html>

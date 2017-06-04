@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Canvas Example 4 animation</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="sample" width="600" height="500"></canvas>
+
+<form>
+	<button id="start" disabled>START</button>
+	<button id="stop">STOP</button>
+</form>
+
+<script src="js/jquery.min.js"></script>
+<script>
+var ANIMATION_ID;
+$(document).ready(function(){
+	var canvas = $("#sample").get(0);
+	var ctx    = canvas.getContext('2d');
+
+	var x = 0;
+	var y = 0;
+	var step = 3;
+	var image = new Image();
+	image.src = "image/food.png";
+	image.onload = function() {
+		 update();
+	};
+
+	function update(){
+		draw();
+		ANIMATION_ID = window.requestAnimationFrame(update);	//See. https://developer.mozilla.org/ja/docs/Web/API/Window/requestAnimationFrame
+																// コールバックの回数は、たいてい毎秒 60 回ですが、一般的に多くのブラウザーでは W3C の勧告に従って、ディスプレイのリフレッシュレートに合わせて行われます。
+	}
+
+	function draw(){
+		// Canvas全体をクリア
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		//画像を描画
+		ctx.drawImage(image, x, y);
+		
+		//方向の調整
+		if( (x >= (canvas.width-image.width)) || (x < 0) ){		// 毎回Canvasと画像サイズを参照するので、本来は別の変数などに入れる
+			step *= -1;
+		}
+
+		//座標移動
+		x += step;
+	}
+
+	//-----------------------------------------
+	// STOPボタン
+	//-----------------------------------------
+	$("#stop").on("click", function(e){
+		//アニメーションを停止
+		window.cancelAnimationFrame(ANIMATION_ID);
+		
+		//STARTボタンを有効にする
+		$("#start").removeAttr("disabled");
+
+		//次の画面に遷移するのキャンセル
+		return(false);
+	});
+
+	//-----------------------------------------
+	// STARTボタン
+	//-----------------------------------------
+	$("#start").on("click", function(e){
+		//アニメーションを再開する
+		update();
+
+		//STARTボタンを無効にする
+		$(this).attr("disabled", true);
+
+		//次の画面に遷移するのキャンセル
+		return(false);
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Canvas Example 1</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="sample" width="600" height="500"></canvas>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var canvas = $("#sample").get(0);
+	var ctx    = canvas.getContext('2d');
+
+	/*----------------------*/
+	/*       線を描く        */
+	/*----------------------*/
+	ctx.beginPath();
+	ctx.moveTo(20, 20);
+	ctx.lineTo(60, 20);
+	ctx.lineTo(60, 60);
+	ctx.lineTo(20, 60);
+	ctx.closePath();
+	ctx.stroke();
+
+	/*----------------------*/
+	/*     四角形を描く       */
+	/*----------------------*/
+	ctx.fillRect(100, 50, 100, 100);	// fillRect(x, y, width, height)
+										// 塗りつぶさない場合は ctx.strokeRect()
+	ctx.clearRect(120, 60, 30, 30);		// 該当座標を削除する
+
+	/*----------------------*/
+	/*       円を描く        */
+	/*----------------------*/
+	ctx.beginPath();
+	ctx.arc(70, 250, 60, 0, Math.PI*2, false);	// arc(x, y, radius, startAngle, endAngle, anticlockwise)
+	ctx.stroke();
+
+	ctx.beginPath();
+	ctx.arc(140, 250, 60, 0, Math.PI*2, false);
+	ctx.fill();	//fill()だと塗りつぶし
+});
+</script>
+</body>
+</html>

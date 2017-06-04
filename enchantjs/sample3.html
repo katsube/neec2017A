@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>enchantjs 3</title>
+</head>
+<body>
+
+<script src="enchantjs/enchant.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	enchant();							// initialize
+	var game = new Core(600, 500);		// game stage
+	game.preload('image/food.png', 'sound/se_foot_short.mp3');		// preload image
+	game.fps = 20;
+
+    game.onload = function(){
+		var scene = new Scene();
+
+		//Sprite準備
+		var tantan = new Food();
+		scene.addChild(tantan);
+		
+		//毎フレーム毎の処理
+		scene.addEventListener('enterframe', function(e) {
+			if (game.input.up    === true) tantan.walk("w");
+			if (game.input.left  === true) tantan.walk("a");
+			if (game.input.down  === true) tantan.walk("s");
+			if (game.input.right === true) tantan.walk("d");
+		});
+
+		//シーンを反映
+        game.pushScene(scene);
+	};
+
+    game.start(); // start your game!
+
+
+
+	/**
+	 * Food Class
+	 */
+	var Food = enchant.Class.create(Sprite, {		//Spriteクラスを継承
+			/** コンストラクター */
+			initialize: function() {
+				var game = enchant.Game.instance;
+				Sprite.call(this, 194, 129);					//Spriteのサイズ定義
+				this.image = game.assets['image/food.png'];		//Spriteに画像をセット
+			}
+
+			/** 移動処理メソッド */
+			, walk: function(key){
+				var step = 5;
+				
+				//移動
+				switch(key){
+					case 'w': this.y -= step; break;
+					case 'a': this.x -= step; break;
+					case 's': this.y += step; break;
+					case 'd': this.x += step; break;
+				}
+
+				//SE再生
+				game.assets['sound/se_foot_short.mp3'].play();
+			}
+	});
+
+});
+</script>
+</body>
+</html>

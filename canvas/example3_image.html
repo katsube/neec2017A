@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Canvas Example 3 image</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<canvas id="sample" width="600" height="500"></canvas>
+
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	var canvas = $("#sample").get(0);
+	var ctx    = canvas.getContext('2d');
+
+	var image = new Image();
+	image.src = "image/food.png";
+	image.onload = function() {
+		ctx.drawImage(image, 0, 0);				//drawImage(image, dx, dy)
+		
+		/*
+		ctx.drawImage(image, 0, 150, 100, 50);	//drawImage(dx, dy, dw, dh)
+		ctx.drawImage(image,
+				  0,   0,	//トリミング開始 x, y
+				100, 100, 	//トリミング終了 x, y
+				  0,   0,	//Canvas表示座標 x, y
+				200, 200	//縮小・拡大サイズ
+		);
+		*/
+	}
+});
+</script>
+</body>
+</html>
