@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf8">
+<title>Example3</title>
+</head>
+<body>
+
+<h1>Example3</h1>
+
+<ul>
+	<li><a href="/hello">/hello</a></li>
+	<li><a href="/name">/name</a></li>
+	<li><a href="/name?name=foo">/name?name=foo</a></li>
+	<li><a href="/name2">/name2</a></li>
+</ul>
+
+<h3>/name2</h3>
+<form method="POST" action="/name2">
+	POST <input type="text" name="name"> <button>送信</button>
+</form>
+<form method="GET" action="/name2">
+	GET <input type="text" name="name"> <button>送信</button>
+</form>
+</body>
+</html>
