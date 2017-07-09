@@ -52,19 +52,19 @@ Node.jsで実行する前に、事前にVagrantの設定が必要です。
 
 	   mysql> select * from books;
 	   +----+--------------------------------+
-       | id | title                          |
-       +----+--------------------------------+
-       |  1 | 羊をめぐる冒険                 |
-       |  2 | ねじまき鳥クロニクル           |
-       |  3 | 海辺のカフカ                   |
-       +----+--------------------------------+
+	   | id | title                          |
+	   +----+--------------------------------+
+	   |  1 | 羊をめぐる冒険                 |
+	   |  2 | ねじまき鳥クロニクル           |
+	   |  3 | 海辺のカフカ                   |
+	   +----+--------------------------------+
 
 5. 新規にユーザーを作成し権限付与する
-       CREATE USER vagrant@'%' IDENTIFIED BY 'V@grant2017';
-	   GRANT ALL ON sample.* TO vagrant@'%';
+	   mysql> CREATE USER vagrant@'%' IDENTIFIED BY 'V@grant2017';
+	   mysql> GRANT ALL ON sample.* TO vagrant@'%';
 
 6. vagrantを抜ける
-       mysql> \q
+	   mysql> \q
 	   $ exit
 </pre>
 
