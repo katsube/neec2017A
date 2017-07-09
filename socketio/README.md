@@ -6,13 +6,13 @@
 # カレントディレクトリを移動
 $ cd socketio
 
-# Node.jsが必要とするライブラリ群をすべてダウンロード (14M程度)
+# Node.jsが必要とするライブラリ群をすべてダウンロード (14M程度)
 $ npm install
 ```
 
 ## 実行方法
 ### example, chat, charmove
-appディレクトリに下にあるJavaScript(xxx.js)をNode.jsを通して実行してください。
+appディレクトリに下にあるJavaScript(xxx.js)をNode.jsを通して実行してください。
 ```bash
 $ cd socketid
 $ node app/charmove/charmove.js
@@ -26,7 +26,7 @@ Node.jsで実行する前に、事前にVagrantの設定が必要です。
 `app/mysql/mysql1.js`の冒頭に記載してある設定を行った後に、Node.jsを実行してください。
 
 事前準備の手順は以下。
-<pre>
+<pre>
   1. Vagrantfileに以下の行を追加
        config.vm.network "forwarded_port", guest: 3306, host: 13306
 
@@ -66,7 +66,7 @@ Node.jsで実行する前に、事前にVagrantの設定が必要です。
 6. vagrantを抜ける
        mysql> \q
 	   $ exit
-</pre>
+</pre>
 
 事前準備が終わったら、他と同様に実行します。
 ```bash
@@ -85,4 +85,4 @@ $ node app/mysql/mysql1.js
 3:海辺のカフカ
 4:騎士団長殺し
 ```
-サンプル`mysql`はブラウザを使用せず、コマンドラインで完結します。
+サンプル`mysql`はブラウザを使用せず、コマンドラインで完結します。
