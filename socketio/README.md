@@ -30,20 +30,20 @@ Node.jsで実行する前に、事前にVagrantの設定が必要です。
   1. Vagrantfileに以下の行を追加
        config.vm.network "forwarded_port", guest: 3306, host: 13306
 
-  2. Vagrant起動
+2. Vagrant起動
        PowerShellを起動しvagrantのディレクトリまで移動。
-	   コマンドを打って起動する。
+       コマンドを打って起動する。
            まだ起動していない場合→ vagrant up      (起動)
            すでに起動している場合→ vagrant reload  (再起動)
 
   3. Vagrantへログイン
-       vagrant ssh
+	   vagrant ssh
 
   4. MySQLを起動しデータベース、テーブル作成、サンプルデータを挿入する
-       $ mysql -u root -p
+	   $ mysql -u root -p
 	   Enter password: Neec2017!
 
-       mysql> create database sample;
+	   mysql> create database sample;
 	   mysql> use sample;
 	   mysql> create table books (id int not null AUTO_INCREMENT, title varchar(64), PRIMARY KEY(id)); 
 	   mysql> insert into books(title) values('羊をめぐる冒険');
