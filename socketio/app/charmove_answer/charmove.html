@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf8">
+<title>Socket.IO CharMove</title>
+<style>
+	#canvas{
+		width: 600px;
+		height: 400px;
+		border: 1px solid gray;
+	}
+	#char{
+		position: relative;
+		top:0px;
+		left: 0px;
+	}
+</style>
+</head>
+<body>
+
+<div id="canvas">
+	<img id="char" src="/image/food.png">
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script>
+
+function moveChar(way, opt_elem, opt_speed, opt_step){
+	var elem  = opt_elem  || "#char"
+	var speed = opt_speed || 50;
+	var step  = opt_step  || "100px";
+
+	switch(way){
+		case 'w':  //↑
+		case 'W':
+		case 119:
+			$(elem).animate({top: '-='+step}, speed);
+			break;
+
+		case 'a':  //←
+		case 'A':  //←
+		case 97:
+			$(elem).animate({left: '-='+step}, speed);
+			break;
+
+		case 's':  //↓
+		case 'S':  //↓
+		case 115:
+			$(elem).animate({top: '+='+step}, speed);
+			break;
+
+		case 'd':  //→
+		case 'S':  //→
+		case 100:
+			$(elem).animate({left: '+='+step}, speed);
+			break;
+		
+		default:
+			console.log(way);
+			break;
+	}
+}
+
+$(function () {
+	var socket = io();
+	var name   = null;
+
+	//-----------------------
+	// ユーザー名の入力を求める
+	//-----------------------
+	do{
+		name = prompt("あなたの名前を「半角英数字」で入力してください");
+		if(! name.match(/^[a-zA-Z0-9]{1,}$/)){
+			name = null;
+		}
+	} while(name===null);
+
+	$(document)
+		.on("keypress", function(e){
+			var keycd = e.keyCode;
+			// 自分の画面を動かす
+			moveChar(keycd);
+
+			//サーバに送信
+			socket.emit('movechar', {uname:name, key:keycd});
+		});
+
+	socket.on('movechar', function(data){
+		console.log("[socket] movechar", data);
+
+		if(name !== data.uname){
+			moveChar(data.key);
+		}
+	});
+});
+</script>
+</body>
+</html>
