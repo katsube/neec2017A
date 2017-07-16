@@ -1,0 +1,1 @@
+[{"rank":1,"userid":"U30001","score":94003},{"rank":2,"userid":"U20001","score":94002},{"rank":3,"userid":"U10001","score":94001},{"rank":4,"userid":"U00001","score":9999}]

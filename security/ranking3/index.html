@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ランキングHack</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <style type="text/css">
+	#dataSave, #dataView{
+		padding-top: 20px;
+	}
+  </style>
+</head>
+<body>
+<div class="container">
+
+<h1>ランキングHack <small>(SQLインジェクション)</small></h1>
+<h3>URL作成</h3>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#dataSave" data-toggle="tab">データ記録</a></li>
+	<li><a href="#dataView" data-toggle="tab">データ閲覧</a></li>
+	<li><a href="#personView" data-toggle="tab">個人データ参照</a></li>
+</ul>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="dataSave">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="url1" class="col-sm-2 control-label">API Endpoint</label>
+				<div class="col-sm-10">
+					<input type="url" class="form-control" id="url1" value="http://localhost:8080/security/ranking3/receive.php">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="userid" class="col-sm-2 control-label">USER ID</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="userid" value="U00001">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="score" class="col-sm-2 control-label">SCORE</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="score" value="9999">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" id="btn-makeurl1" class="btn btn-default">URL作成</button>
+				</div>
+			</div>
+		</form>
+	</div> <!-- /.dataSave -->
+	<div class="tab-pane" id="dataView">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="url2" class="col-sm-2 control-label">API Endpoint</label>
+				<div class="col-sm-10">
+					<input type="url" class="form-control" id="url2" value="http://localhost:8080/security/ranking3/view.php">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" id="btn-makeurl2" class="btn btn-default">URL作成</button>
+				</div>
+			</div>
+		</form>
+	</div> <!-- /.dataView -->
+	<div class="tab-pane" id="personView">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="url3" class="col-sm-2 control-label">API Endpoint</label>
+				<div class="col-sm-10">
+					<input type="url" class="form-control" id="url3" value="http://localhost:8080/security/ranking3/person.php">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="uid" class="col-sm-2 control-label">USER ID</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="uid" value="U00001">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" id="btn-makeurl3" class="btn btn-default">URL作成</button>
+				</div>
+			</div>
+		</form>
+	</div> <!-- /.dataView -->
+</div> <!-- /.tab-content -->
+
+
+
+
+<h3>送信</h3>
+<form class="form-horizontal">
+	<div class="form-group">
+		<label for="requesturl" class="col-sm-2 control-label">リクエスト用URL</label>
+		<div class="col-sm-10">
+			<textarea id="requesturl" class="form-control"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="method" class="col-sm-2 control-label">メソッド</label>
+		<div class="col-sm-10">
+			<label class="radio-inline">
+				<input type="radio" name="method" id="method1" value="GET" checked> GET
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="method" id="method2" value="POST"> POST
+			</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="detaType" class="col-sm-2 control-label">データ形式</label>
+		<div class="col-sm-10">
+			<label class="radio-inline">
+				<input type="radio" name="dataType" id="dataType1" value="json" checked> JSON
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="dataType" id="dataType2" value="text"> TEXT
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="dataType" id="dataType3" value="html"> HTML
+			</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="button" id="btn-submit" class="btn btn-primary">サーバへ送信</button>
+			<button type="button" id="btn-reset" class="btn btn-default">リセット</button>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<pre id="monitor">※送信結果をここに表示</pre>
+		</div>
+	</div>
+</form>
+
+</div><!-- /.container -->
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	//------------------------
+	// 「URL作成」ボタン
+	//------------------------
+	$("#btn-makeurl1").on("click", function(){
+		var url      = $("#url1").val();
+		var userid   = $("#userid").val();
+		var score    = $("#score").val();
+
+		//リクエスト用URL文字列を作成
+		var requesturl = url + '?userid='   + encodeURIComponent(userid)
+							 + '&score='    + encodeURIComponent(score);
+
+		//フォームに入れる
+		$("#requesturl").val(requesturl);
+	});
+	$("#btn-makeurl2").on("click", function(){
+		var url = $("#url2").val();
+
+		//リクエスト用URL文字列を作成
+		var requesturl = url;
+		
+		//フォームに入れる
+		$("#requesturl").val(requesturl);
+	});
+	$("#btn-makeurl3").on("click", function(){
+		var url = $("#url3").val();
+		var uid = $("#uid").val();
+
+		//リクエスト用URL文字列を作成
+		var requesturl = url + "?userid=" + encodeURIComponent(uid);
+		
+		//フォームに入れる
+		$("#requesturl").val(requesturl);
+	});
+
+	//------------------------
+	// 「サーバへ送信」ボタン
+	//------------------------
+	$("#btn-submit").on("click", function(){
+		var requesturl = $("#requesturl").val();
+		var method     = $("input[name='method']:checked").val();
+		var dataType   = $("input[name='dataType']:checked").val();
+	
+		//------------------------
+		// Validation
+		//------------------------
+		// requesturl
+		if( requesturl === "" ){
+			alert("リクエストURLが入力されていません");
+			return(false);
+		}
+		//else if( ! requesturl.match(/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/) ){
+		//	alert("リクエストURLの書式が不正です");
+		//	return(false);
+		//}
+
+		// method
+		if( ! (method === "GET" || method === "POST") ){
+			alert("メソッドが選択されていないか不正な値です");
+			return(false);
+		}
+
+		// dataType
+		if( ! (dataType === "json" || dataType === "text" || dataType === "html") ){
+			alert("データ形式が選択されていないか不正な値です");
+			return(false);
+		}
+		
+
+		//------------------------
+		// サーバへ送信
+		//------------------------
+		$.ajax(requesturl, {
+			  dataType: dataType
+			, method: method
+			, beforeSend: function(){
+				$("#monitor").html("...送信開始");
+			}
+		})
+		.done(function(data){
+			var result = "";
+			
+			if( dataType === "json" ){
+				result = JSON.stringify(data, null, "  ");		//JSONを人間が読みやすい文字列に変換
+			}
+			else if( dataType === "text" ){
+				result = $("<div />").text(data).html();		//HTMLタグに該当する部分をescape
+			}
+			else{
+				result = data;
+			}
+
+			// 表示する
+			$("#monitor").html(result);
+		})
+		.fail(function(jqXHR, textStatus, errorThrown){
+			$("#monitor").html('サーバ側でエラーが発生しました\n' + textStatus);
+		});
+	});
+	//------------------------
+	// 「リセット」ボタン
+	//------------------------
+	$("#btn-reset").on("click", function(){
+		$("#monitor").html('※送信結果をここに表示');
+		$("#requesturl").val("");
+	});
+});
+</script>
+</body>
+</html>
