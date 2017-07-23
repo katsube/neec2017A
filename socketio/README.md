@@ -19,7 +19,7 @@ $ node app/charmove/charmove.js
 listening on *:3000
 ```
 
-次にGoogleChromeなどのWebブラウザを開き、`http://localhost:3000` へアクセスすると実行結果が閲覧できます。
+次にGoogleChromeなどのWebブラウザを開き、`http://localhost:3000` へアクセスすると実行結果が閲覧できます。chat, charmoveは複数のウィンドウ(タブ)を開いて動作を確認してください。
 
 ### mysql
 Node.jsで実行する前に、事前にVagrantの設定が必要です。
